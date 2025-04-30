@@ -1,7 +1,8 @@
 "use server"
 
 import { db } from "@/db";
-import { CreatePostSchema, PostFormData } from "./Form";
+import { CreatePostSchema } from "./Form";
+import { parseZodErrors } from "../shared/zodValidation";
 
 export async function createPost(formData: FormData) {
   const title = formData.get("title");
@@ -10,6 +11,7 @@ export async function createPost(formData: FormData) {
   console.log(`🔄 Creating post: ${title} ${content}`);
 
   // validate the form content with Zod
+  /*
   const result = CreatePostSchema.safeParse({ title, content });
 
   if (!result.success) {
@@ -20,6 +22,12 @@ export async function createPost(formData: FormData) {
     })
     return { success: false, errors: fieldErrors }
   }
+  */
+  const result = parseZodErrors(CreatePostSchema, { title, content })
+  if (!result.success) {
+    return { success: false, errors: result.errors }
+  }
+
 
   console.log(`✅ Validation passed: ${title} ${content}`);
 

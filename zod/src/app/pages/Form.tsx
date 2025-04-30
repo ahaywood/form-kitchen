@@ -1,9 +1,10 @@
 "use client"
 
 import { useState } from "react";
-import { PostModel } from "../../../prisma/zod/post";
+import { PostModel } from "zod/post";
 import { z } from "zod";
 import { createPost } from "./actions";
+import { parseZodErrors } from "../shared/zodValidation";
 
 // Form validation schema
 export const CreatePostSchema = PostModel.omit({ id: true, createdAt: true })
@@ -19,7 +20,9 @@ const Form = () => {
     console.log(`✅ Submitted: ${title} ${content}`);
 
     // validate the form content with Zod
+    /*
     const result = CreatePostSchema.safeParse({ title, content });
+
 
     if (!result.success) {
       console.log(`❌ Validation failed: ${result.error.message}`);
@@ -30,6 +33,9 @@ const Form = () => {
       setError(fieldErrors)
       return // Stop submission if validation fails
     }
+    */
+
+    const result = parseZodErrors(CreatePostSchema, { title, content });
 
     // If client validation passes, send to server
     console.log(`🔄 Sending to server: ${title} ${content}`);

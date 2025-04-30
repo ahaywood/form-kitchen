@@ -21,7 +21,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      ".prisma/*": ["./node_modules/.prisma/*"]
+      ".prisma/*": ["./node_modules/.prisma/*"],
+      "zod/*": ["./prisma/zod/*"]
     },
     /* Enable importing .json files */
     "resolveJsonModule": true,
