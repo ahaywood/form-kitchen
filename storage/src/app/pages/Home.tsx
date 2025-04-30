@@ -1,13 +1,24 @@
 import { RequestInfo } from "@redwoodjs/sdk/worker";
+import { Form } from "./Form";
+import { db } from "@/db";
 
-export function Home({ ctx }: RequestInfo) {
+export async function Home({ ctx }: RequestInfo) {
+  const posts = await db.post.findMany();
+
   return (
-    <div>
-      <p>
-        {ctx.user?.username
-          ? `You are logged in as user ${ctx.user.username}`
-          : "You are not logged in"}
-      </p>
-    </div>
+    <>
+      <Form />
+      <pre>{JSON.stringify(posts, null, 2)}</pre>
+
+      <div>
+        {posts.map((post) => (
+          <div key={post.id}>
+            <h2>{post.title}</h2>
+            <img src={post.cover} alt={post.title} />
+          </div>
+        ))}
+      </div>
+    </>
+
   );
 }
