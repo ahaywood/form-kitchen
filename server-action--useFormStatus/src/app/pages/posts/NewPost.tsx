@@ -6,7 +6,7 @@ import { useFormStatus } from "react-dom";
 const Button = () => {
   // const status = useFormStatus();
   // return <button disabled={status.pending}>{status.pending ? "Loading..." : "Create Post"}</button>
-  return <button>Create Post</button>
+  return <button type="submit">Create Post</button>
 }
 
 const NewPost = () => {
